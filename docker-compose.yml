@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  jenkins:
+    image: free23/jenkins
+    build: ./docker
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - ./shared/jobs:/var/jenkins_home/jobs/
+      - ./shared/downloads:/var/jenkins_home/downloads
+      - /var/run/docker.sock:/var/run/docker.sock
+    secrets:
+      - jenkins-user
+      - jenkins-pass
+      - test-user
+      - test-pass 
+
+secrets:
+  jenkins-user:
+    file: ./secrets/default_user.txt
+  jenkins-pass:
+    file: ./secrets/default_pass.txt
+  test-user:
+    file: ./secrets/default_user.txt
+  test-pass:
+    file: ./secrets/default_pass.txt
